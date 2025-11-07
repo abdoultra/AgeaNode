@@ -1,8 +1,7 @@
 # Étape 1 : Choisir l'image Node
-FROM node:20-alpine
-
+FROM node:20-bookworm-slim
 # Étape 2 : Définir le répertoire de travail dans le conteneur
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Étape 3 : Copier les fichiers de configuration
 COPY package*.json ./
@@ -14,7 +13,7 @@ RUN npm install
 COPY . .
 
 # Étape 6 : Exposer le port
-EXPOSE 3000
+EXPOSE 5173
 
 # Étape 7 : Lancer l’application
 CMD ["npm", "run", "dev"]

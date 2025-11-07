@@ -9,17 +9,34 @@ services:
       - mongo-data:/data/db
 
   api:
-    build: .
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile  
     container_name: nodejs-api
     restart: unless-stopped
     ports:
       - "3000:3000"
-    env_file: .env
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/api_node
     depends_on:
       - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - api
     volumes:
-      - .:/app
-      - /app/node_modules
+      - ./frontend:/usr/share/nginx/html
 
 volumes:
   mongo-data:

@@ -1,2 +1,5 @@
-.env
+backend/.env
+backend/node_modules
+./backend/resume.txt
+frontend/node_modules
 node_modules
